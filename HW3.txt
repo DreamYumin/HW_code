@@ -1,0 +1,271 @@
+//HW5 by Yumin Meng
+//SU Net ID:ymeng10; SUID:861527273
+
+#include <windows.h>
+#include <iostream>
+using namespace std;
+
+void gotoxy(int x, int y) {
+	COORD pos = { x,y };
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hOut, pos);
+}
+void o()
+{
+	cout << "o";
+}
+void l()
+{
+	cout << "|";
+}
+void t()
+{
+	cout << "-";
+}
+
+void line1(int x1, int y1, int x2, int y2)
+{
+
+	int a = x2 - x1;
+	int b = y2 - y1;
+	if (a == 0 && b == 0)
+	{
+		gotoxy(x1, y1);
+		o();
+	}
+	else
+	{
+		if (a == 0)
+		{
+			gotoxy(x1, y1);
+			o();
+			y1++;
+			for (int i = 0; i < (b - 2) / 2; i++)
+			{
+				gotoxy(x1, y1);
+				l();
+				y1++;
+			}
+			gotoxy(x1, y1);
+			o();
+			y1++;
+			for (int i = 0; i < (b - 2) / 2; i++)
+			{
+				gotoxy(x1, y1);
+				l();
+				y1++;
+			}
+			gotoxy(x1, y1);
+			o();
+			y1++;
+
+		}
+		else
+		{
+			gotoxy(x1, y1);
+			o();
+			x1++;
+			for (int i = 0; i < (a - 2) / 2; i++)
+			{
+				gotoxy(x1, y1);
+				t();
+				x1++;
+			}
+			gotoxy(x1, y1);
+			o();
+			x1++;
+			for (int i = 0; i < (a - 2) / 2; i++)
+			{
+				gotoxy(x1, y1);
+				t();
+				x1++;
+			}
+			gotoxy(x1, y1);
+			o();
+			x1++;
+		}
+	}
+}
+void drawH1(int x, int y, int size)
+{
+	if (size % 2 == 1)
+	{
+		size += 1;
+	}
+	int x0 = x - size / 2;
+	int x1 = x + size / 2;
+	int y0 = y - size / 2;
+	int y1 = y + size / 2;
+	int size1 = size / 2;
+	if (size1 == 2)
+	{
+		x0 = x0 + size1;
+		x1 = x1 - size1;
+	}
+	else
+	{
+		x0 = x0 + size1 / 2;
+		x1 = x1 - size1 / 2;
+	}
+
+	line1(x0, y0, x1, y0);
+	line1(x0, y1, x1, y1);
+	line1(x, y0, x, y1);
+}
+void draw1(int n, int x, int y, int size)
+{
+	if (n == 0) return;
+	drawH1(x, y, size);
+	if (size % 2 == 1)
+	{
+		size += 1;
+	}
+
+	int x0 = x - size / 2;
+	int x1 = x + size / 2;
+	int y0 = y - size / 2;
+	int y1 = y + size / 2;
+	int size1 = size / 2;
+	if (size1 % 2 == 1)
+	{
+		size1 = size1 - 1;
+	}
+	x0 = x0 + size1 / 2;
+	x1 = x1 - size1 / 2;
+
+	draw1(n - 1, x0, y0, size / 2);
+	draw1(n - 1, x0, y1, size / 2);
+	draw1(n - 1, x1, y0, size / 2);
+	draw1(n - 1, x1, y1, size / 2);
+
+}
+
+void line2(int x1, int y1, int x2, int y2)
+{
+
+	int a = x2 - x1;
+	int b = y2 - y1;
+
+	if (a == 0)
+	{
+		gotoxy(x1, y1);
+		o();
+		y1++;
+		for (int i = 0; i < (b - 2) / 2; i++)
+		{
+			gotoxy(x1, y1);
+			l();
+			y1++;
+		}
+		gotoxy(x1, y1);
+		o();
+		y1++;
+		for (int i = 0; i < (b - 2) / 2; i++)
+		{
+			gotoxy(x1, y1);
+			l();
+			y1++;
+		}
+		gotoxy(x1, y1);
+		o();
+		y1++;
+
+	}
+	else
+	{
+		gotoxy(x1, y1);
+		o();
+		x1++;
+		for (int i = 0; i < (a - 2) / 2; i++)
+		{
+			gotoxy(x1, y1);
+			t();
+			x1++;
+		}
+		gotoxy(x1, y1);
+		o();
+		x1++;
+		for (int i = 0; i < (a - 2) / 2; i++)
+		{
+			gotoxy(x1, y1);
+			t();
+			x1++;
+		}
+		gotoxy(x1, y1);
+		o();
+		x1++;
+	}
+}
+void drawH2(int x, int y, int size)
+{
+	if (size % 2 == 1)
+	{
+		size += 1;
+	}
+	int x0 = x - size / 2;
+	int x1 = x + size / 2;
+	int y0 = y - size / 2;
+	int y1 = y + size / 2;
+
+	line2(x0, y0, x0, y1);
+	line2(x1, y0, x1, y1);
+	line2(x0, y, x1, y);
+}
+void draw2(int n, int x, int y, int size)
+{
+	if (n == 0) return;
+	drawH2(x, y, size);
+	if (size % 2 == 1)
+	{
+		size += 1;
+	}
+
+	int x0 = x - size / 2;
+	int x1 = x + size / 2;
+	int y0 = y - size / 2;
+	int y1 = y + size / 2;
+	draw2(n - 1, x0, y0, size / 2);
+	draw2(n - 1, x0, y1, size / 2);
+	draw2(n - 1, x1, y0, size / 2);
+	draw2(n - 1, x1, y1, size / 2);
+
+}
+
+
+
+
+
+
+int main()
+{
+
+	int n = 3;
+	cout << "Please input a number n to draw tree:" << endl;
+	cin >> n;
+
+
+	if (n % 2 == 0)
+	{
+		n = n / 2;
+		int sum = 6;
+		for (int i = 0; i < n - 2; i++)
+		{
+			sum *= 2;
+		}
+		draw1(n, sum - 1, sum + 1, sum);
+	}
+	else
+	{
+		n = (n - 1) / 2;
+		int sum = 6;
+		for (int i = 0; i < n - 2; i++)
+		{
+			sum *= 2;
+		}
+		draw2(n, sum - 1, sum + 1, sum);
+
+	}
+	cin.get();
+	cin.get();
+	return 0;
+}
